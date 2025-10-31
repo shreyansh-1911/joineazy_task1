@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 export default function Signup() {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = () => {
@@ -27,40 +28,60 @@ export default function Signup() {
       return;
     }
 
-    users.push({ name });
-    localStorage.setItem("users", JSON.stringify(users));
-    alert("Signup successful! Please login now.");
-    navigate("/login");
+    setLoading(true);
+
+    // Simulate a delay for signup
+    setTimeout(() => {
+      users.push({ name });
+      localStorage.setItem("users", JSON.stringify(users));
+      setLoading(false);
+      alert("Signup successful! Please login now.");
+      navigate("/login");
+    }, 500);
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
-        <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
+          <p className="text-gray-500 mt-1">Join us and start your journey</p>
+        </div>
 
-        <input
-          type="text"
-          placeholder="Enter your name"
-          className="w-full border p-3 rounded-lg mb-2 focus:outline-blue-500"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-            setError("");
-          }}
-        />
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-purple-300 focus:border-purple-500 outline-none transition"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+              setError("");
+            }}
+            disabled={loading}
+          />
 
-        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+          {error && (
+            <p className="text-red-600 text-sm bg-red-50 border border-red-200 p-2 rounded-lg">
+              {error}
+            </p>
+          )}
 
-        <button
-          onClick={handleSignup}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          Sign Up
-        </button>
+          <button
+            onClick={handleSignup}
+            disabled={loading}
+            className="w-full py-3 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Signing up..." : "Sign Up"}
+          </button>
+        </div>
 
-        <p className="text-center text-sm mt-4">
+        <p className="text-center text-gray-500 text-sm mt-6">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-600 hover:underline">
+          <Link
+            to="/login"
+            className="text-purple-600 font-medium hover:underline"
+          >
             Login
           </Link>
         </p>
