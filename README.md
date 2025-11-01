@@ -11,10 +11,10 @@ It uses **LocalStorage** for persistence and supports **Docker** for seamless de
 git clone https://github.com/<your-username>/joineazy-dashboard.git
 cd joineazy-dashboard
 
-### 🧱 Step 2: Install Dependencies
+### ⚙️ Step 2: Install Dependencies
 npm install
 
-### 🧱 Step 3: Run the App Locally
+### ▶️ Step 3: Run the App Locally
 npm run dev
 
 Then open your browser and visit:
@@ -26,7 +26,7 @@ Then open your browser and visit:
 ### 🧱 Step 1: Build the Docker Image
 docker build -t joineazy-dashboard .
 
-### 🧱 Step 2: Run the Container
+### ▶️ Step 2: Run the Container
 docker run -d -p 3000:80 joineazy-dashboard
 
 
