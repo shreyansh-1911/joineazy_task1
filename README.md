@@ -17,9 +17,6 @@ npm install
 ### ▶️ Step 3: Run the App Locally
 npm run dev
 
-Then open your browser and visit:
-👉 http://localhost:5173
-
 
 ## 🐳 Docker Setup (Build & Run)
 
@@ -28,6 +25,7 @@ docker build -t joineazy-dashboard .
 
 ### ▶️ Step 2: Run the Container
 docker run -d -p 3000:80 joineazy-dashboard
+open the browser - localhost:3000
 
 
 ## 🗂 Folder Structure
