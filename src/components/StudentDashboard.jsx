@@ -30,7 +30,6 @@ export default function StudentDashboard() {
     localStorage.setItem("assignments", JSON.stringify(updated));
   };
 
-  // ✅ Calculate progress
   const totalAssignments = assignments.length;
   const completedAssignments = assignments.filter((a) =>
     a.submissions.includes(currentUser.name)
@@ -40,16 +39,8 @@ export default function StudentDashboard() {
       ? Math.round((completedAssignments / totalAssignments) * 100)
       : 0;
 
-  // ✅ Dynamic color based on progress
-  const getProgressColor = () => {
-    if (progress < 40) return "bg-red-500";
-    if (progress < 80) return "bg-yellow-500";
-    return "bg-green-500";
-  };
-
   return (
     <div className="p-6 min-h-screen bg-gray-100">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">
           Welcome, {currentUser?.name || "Student"}
@@ -62,7 +53,6 @@ export default function StudentDashboard() {
         </button>
       </div>
 
-      {/* ✅ Assignment Progress Line */}
       <div className="mb-8">
         <h3 className="text-lg font-semibold mb-2 text-gray-100">
           Assignment Progress
@@ -75,15 +65,12 @@ export default function StudentDashboard() {
           ></div>
         </div>
 
-        <p className="text-sm text-gray-300 mt-2 font-medium text-center">
+        <p className="text-sm text-black-300 mt-2 font-medium text-center">
           {completedAssignments} / {totalAssignments} Assignments Completed (
           {progress}%)
         </p>
       </div>
 
-
-
-      {/* Assignments */}
       <div className="bg-white p-6 rounded-xl shadow-md">
         <h3 className="text-lg font-semibold mb-4 text-gray-700">Assignments</h3>
         {assignments.length === 0 && <p>No assignments yet.</p>}
@@ -104,7 +91,7 @@ export default function StudentDashboard() {
               </a>
             </div>
             {a.submissions.includes(currentUser.name) ? (
-              <p className="text-green-600 font-semibold">✅ Submitted</p>
+              <p className="text-green-600 font-semibold">Submitted</p>
             ) : (
               <button
                 onClick={() => handleSubmit(a.id)}

@@ -3,13 +3,10 @@ import React, { useState } from "react";
 export default function AssignmentCard({ assignment, users, onEdit, onDelete }) {
   const [showDetails, setShowDetails] = useState(false);
 
-  // Prevent errors if submissions missing
   const submissions = assignment?.submissions ?? [];
 
-  // Filter out admin
   const studentUsers = users.filter((u) => u.name.toLowerCase() !== "admin");
 
-  // Calculate progress
   const total = studentUsers.length;
   const completed = submissions.length;
   const percentage = total > 0 ? (completed / total) * 100 : 0;
@@ -21,7 +18,6 @@ export default function AssignmentCard({ assignment, users, onEdit, onDelete }) 
       onMouseEnter={() => setShowDetails(true)}
       onMouseLeave={() => setShowDetails(false)}
     >
-      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h4 className="font-semibold text-lg">{assignment.title}</h4>
@@ -57,7 +53,6 @@ export default function AssignmentCard({ assignment, users, onEdit, onDelete }) 
         </div>
       </div>
 
-      {/* Progress bar */}
       <div className="w-full bg-gray-200 h-2 rounded-full mt-3">
         <div
           className="bg-green-500 h-2 rounded-full transition-all duration-300"
@@ -68,7 +63,6 @@ export default function AssignmentCard({ assignment, users, onEdit, onDelete }) 
         {completed}/{total} Submitted
       </p>
 
-      {/* Hover/Click: Student Submission Status */}
       {showDetails && (
         <div className="mt-4 border-t pt-3">
           <h5 className="text-sm font-semibold mb-2">Submission Status:</h5>

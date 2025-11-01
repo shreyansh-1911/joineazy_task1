@@ -1,16 +1,80 @@
-# React + Vite
+# 🧑‍💻 Joineazy Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The **Joineazy Dashboard** is a modern **React + Vite** web application that enables **admins** to manage assignments and track student submissions, while **students** can easily view and submit their work.  
+It uses **LocalStorage** for persistence and supports **Docker** for seamless deployment.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ⚙️ Setup & Installation
 
-## React Compiler
+### 🧱 Step 1: Clone the Repository
+git clone https://github.com/<your-username>/joineazy-dashboard.git
+cd joineazy-dashboard
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🧱 Step 2: Install Dependencies
+npm install
 
-## Expanding the ESLint configuration
+### 🧱 Step 3: Run the App Locally
+npm run dev
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Then open your browser and visit:
+👉 http://localhost:5173
+
+
+## 🐳 Docker Setup (Build & Run)
+
+### 🧱 Step 1: Build the Docker Image
+docker build -t joineazy-dashboard .
+
+### 🧱 Step 2: Run the Container
+docker run -d -p 3000:80 joineazy-dashboard
+
+
+## 🗂 Folder Structure
+joineazy-dashboard/
+│
+├── public/                         # Static assets
+│
+├── src/
+│   ├── assets/                     # Icons and images
+│   ├── components/                 # Core UI components
+│   │   ├── AdminDashboard.jsx      # Admin main dashboard
+│   │   ├── StudentDashboard.jsx    # Student main dashboard
+│   │   └── AssignmentCard.jsx      # Reusable assignment card
+│   ├── pages/
+│   │   ├── Login.jsx               # Login page
+│   │   └── Signup.jsx              # Signup page
+│   ├── App.jsx                     # Router setup
+│   ├── main.jsx                    # Root entry point
+│   ├── App.css                     # Global styles
+│   └── index.css                   # Tailwind base CSS
+│
+├── Dockerfile                      # Docker configuration
+├── .dockerignore                   # Files to ignore in Docker build
+├── package.json                    # Dependencies and scripts
+├── vite.config.js                  # Vite configuration
+├── tailwind.config.js              # Tailwind setup
+└── README.md                       # Project documentation
+
+
+## 🧩 Features
+
+### 👨‍🏫 Admin Dashboard
+- Create, edit, and delete assignments  
+- View submission status for each student  
+- Hover or click to see which students have submitted (✅) or not (❌)  
+- Visual progress bars for submission percentage  
+
+### 🎓 Student Dashboard
+- View available assignments  
+- Submit assignments via Google Drive link  
+- Track submission status in real-time  
+
+### 🧠 General
+- LocalStorage-based data persistence  
+- Simple name-based signup/login  
+- Fully responsive UI (Tailwind CSS)  
+- Dockerized for quick setup and deployment  
+
+
+```bash

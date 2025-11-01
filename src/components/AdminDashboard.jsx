@@ -13,12 +13,10 @@ export default function AdminDashboard() {
 
   const users = JSON.parse(localStorage.getItem("users")) || [];
 
-  // Persist assignments in localStorage
   useEffect(() => {
     localStorage.setItem("assignments", JSON.stringify(assignments));
   }, [assignments]);
 
-  // Add or Update assignment
   const handleSaveAssignment = () => {
     if (!title.trim() || !link.trim()) {
       alert("Please fill all fields.");
@@ -69,7 +67,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="p-6">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Admin Dashboard</h2>
         <button
@@ -80,7 +77,6 @@ export default function AdminDashboard() {
         </button>
       </div>
 
-      {/* Create / Edit Assignment */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
         <h3 className="text-lg font-semibold mb-4">
           {editId ? "Edit Assignment" : "Create Assignment"}
@@ -121,7 +117,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Assignments List */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h3 className="text-lg font-semibold mb-4">Assignments Overview</h3>
         {assignments.length === 0 && <p>No assignments yet.</p>}
