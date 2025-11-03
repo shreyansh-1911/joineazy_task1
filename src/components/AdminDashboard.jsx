@@ -1,72 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AssignmentCard from "./AssignmentCard";
+import CourseCard from "./CourseCard";
+import CourseAssignmentsPage from "./CourseAssignmentsPage";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const [assignments, setAssignments] = useState(
-    JSON.parse(localStorage.getItem("assignments")) || []
+  const [courses, setCourses] = useState(
+    JSON.parse(localStorage.getItem("courses")) || []
   );
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
-  const [editId, setEditId] = useState(null);
-
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem("assignments", JSON.stringify(assignments));
-  }, [assignments]);
-
-  const handleSaveAssignment = () => {
-    if (!title.trim() || !link.trim()) {
-      alert("Please fill all fields.");
-      return;
+    // If no courses exist, initialize defaults
+    if (courses.length === 0) {
+      const defaultCourses = [
+        { id: 1, name: "LLM" },
+        { id: 2, name: "ADS" },
+        { id: 3, name: "CV" },
+        { id: 4, name: "TOC" },
+      ];
+      setCourses(defaultCourses);
+      localStorage.setItem("courses", JSON.stringify(defaultCourses));
     }
-
-    if (editId) {
-      const updated = assignments.map((a) =>
-        a.id === editId ? { ...a, title, link } : a
-      );
-      setAssignments(updated);
-      setEditId(null);
-      alert("Assignment updated!");
-    } else {
-      const newAssignment = {
-        id: Date.now(),
-        title,
-        link,
-        submissions: [],
-      };
-      setAssignments([...assignments, newAssignment]);
-      alert("Assignment added!");
-    }
-
-    setTitle("");
-    setLink("");
-  };
-
-  // Edit
-  const handleEdit = (assignment) => {
-    setTitle(assignment.title);
-    setLink(assignment.link);
-    setEditId(assignment.id);
-  };
-
-  // Delete
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this assignment?")) {
-      const updated = assignments.filter((a) => a.id !== id);
-      setAssignments(updated);
-    }
-  };
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
     navigate("/login");
   };
 
+  if (selectedCourse) {
+    return (
+      <CourseAssignmentsPage
+        course={selectedCourse}
+        goBack={() => setSelectedCourse(null)}
+      />
+    );
+  }
+
   return (
-    <div className="p-6">
+    <div className="p-6 min-h-screen bg-gray-50">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Admin Dashboard</h2>
         <button
@@ -77,57 +50,10 @@ export default function AdminDashboard() {
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-        <h3 className="text-lg font-semibold mb-4">
-          {editId ? "Edit Assignment" : "Create Assignment"}
-        </h3>
-        <input
-          type="text"
-          placeholder="Title"
-          className="border p-2 rounded-lg w-full mb-2"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Google Drive Link"
-          className="border p-2 rounded-lg w-full mb-4"
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
-        />
-        <div className="flex gap-2">
-          <button
-            onClick={handleSaveAssignment}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-          >
-            {editId ? "Update" : "Add"}
-          </button>
-          {editId && (
-            <button
-              onClick={() => {
-                setEditId(null);
-                setTitle("");
-                setLink("");
-              }}
-              className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h3 className="text-lg font-semibold mb-4">Assignments Overview</h3>
-        {assignments.length === 0 && <p>No assignments yet.</p>}
-        {assignments.map((assignment) => (
-          <AssignmentCard
-            key={assignment.id}
-            assignment={assignment}
-            users={users}
-            onEdit={() => handleEdit(assignment)}
-            onDelete={() => handleDelete(assignment.id)}
-          />
+      <h3 className="text-lg font-semibold mb-4">📚 Courses</h3>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {courses.map((c) => (
+          <CourseCard key={c.id} course={c} onSelect={() => setSelectedCourse(c)} />
         ))}
       </div>
     </div>
