@@ -1,12 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function AssignmentCard({ assignment, users, onEdit, onDelete }) {
+export default function AssignmentCard({ assignment, onEdit, onDelete }) {
   const [showDetails, setShowDetails] = useState(false);
+  const [users, setUsers] = useState([]);
   const submissions = assignment?.submissions ?? [];
-  const studentUsers = users.filter((u) => u.role === "student");
 
-  const total = studentUsers.length;
-  const completed = submissions.length;
+  // ✅ Always fetch latest users data every time component mounts or localStorage changes
+  useEffect(() => {
+    const loadUsers = () => {
+      const latestUsers = JSON.parse(localStorage.getItem("users")) || [];
+      setUsers(latestUsers);
+    };
+    loadUsers();
+
+    // Optional: Listen for any storage updates (like student enrolling)
+    window.addEventListener("storage", loadUsers);
+    return () => window.removeEventListener("storage", loadUsers);
+  }, []);
+
+  // ✅ Only students enrolled in this assignment’s course
+  const enrolledStudents = users.filter(
+    (u) => u.role === "student" && Array.isArray(u.enrolledCourses) && u.enrolledCourses.includes(assignment.course)
+  );
+
+  const total = enrolledStudents.length;
+  const completed = submissions.filter((s) =>
+    enrolledStudents.some((u) => u.name === s.name)
+  ).length;
+
   const percentage = total > 0 ? (completed / total) * 100 : 0;
 
   return (
@@ -15,7 +36,7 @@ export default function AssignmentCard({ assignment, users, onEdit, onDelete }) 
       onMouseEnter={() => setShowDetails(true)}
       onMouseLeave={() => setShowDetails(false)}
     >
-      {/* Title */}
+      {/* Title & Actions */}
       <div className="flex justify-between items-start mb-2">
         <div>
           <h4 className="font-semibold text-lg">{assignment.title}</h4>
@@ -28,7 +49,9 @@ export default function AssignmentCard({ assignment, users, onEdit, onDelete }) 
           <p className="text-sm text-gray-500">
             Deadline:{" "}
             <span className="font-medium">
-              {new Date(assignment.deadline).toLocaleString()}
+              {assignment.deadline
+                ? new Date(assignment.deadline).toLocaleString()
+                : "N/A"}
             </span>
           </p>
           <a
@@ -66,7 +89,7 @@ export default function AssignmentCard({ assignment, users, onEdit, onDelete }) 
       {/* Description */}
       <p className="text-sm text-gray-700 mb-2">{assignment.description}</p>
 
-      {/* Progress */}
+      {/* Progress Bar */}
       <div className="w-full bg-gray-200 h-2 rounded-full mt-2">
         <div
           className="bg-green-500 h-2 rounded-full transition-all duration-300"
@@ -77,12 +100,13 @@ export default function AssignmentCard({ assignment, users, onEdit, onDelete }) 
         {completed}/{total} Submitted
       </p>
 
+      {/* Submission Details */}
       {showDetails && (
         <div className="mt-3 border-t pt-3">
           <h5 className="text-sm font-semibold mb-2">Submission Status:</h5>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
-            {studentUsers.map((u) => {
-              const hasSubmitted = submissions.includes(u.name);
+            {enrolledStudents.map((u) => {
+              const hasSubmitted = submissions.some((s) => s.name === u.name);
               return (
                 <div key={u.name} className="flex items-center gap-2 text-sm mb-1">
                   <span
