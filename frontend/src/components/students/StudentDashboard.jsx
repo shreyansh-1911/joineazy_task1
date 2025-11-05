@@ -21,7 +21,6 @@ export default function StudentDashboard() {
     syncedUser?.enrolledCourses || []
   );
 
-  // 🧠 Persist enrolled courses to users & currentUser
   useEffect(() => {
     if (!currentUser) return;
     const allUsers = JSON.parse(localStorage.getItem("users")) || [];
@@ -34,7 +33,7 @@ export default function StudentDashboard() {
     setCurrentUser(updatedUser);
   }, [enrolledCourses]);
 
-  // 🚪 Logout — keep user data safe before removing currentUser
+
   const handleLogout = () => {
     const allUsers = JSON.parse(localStorage.getItem("users")) || [];
     const updatedUsers = allUsers.map((u) =>
@@ -42,6 +41,7 @@ export default function StudentDashboard() {
     );
     localStorage.setItem("users", JSON.stringify(updatedUsers));
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("token"); 
     navigate("/login");
   };
 
@@ -59,7 +59,6 @@ export default function StudentDashboard() {
         </button>
       </div>
 
-      {/* Toggle between courses list and assignments */}
       {!selectedCourse ? (
         <CoursesList
           courses={courses}

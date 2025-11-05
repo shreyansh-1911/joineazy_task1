@@ -18,7 +18,7 @@ export default function CoursesList({
 
   return (
     <div className="bg-white p-6 rounded-lg shadow">
-      <h3 className="text-xl font-semibold mb-4">🎓 Available Courses</h3>
+      <h3 className="text-xl font-semibold mb-4">Available Courses</h3>
       {courses.length === 0 ? (
         <p>No courses available.</p>
       ) : (

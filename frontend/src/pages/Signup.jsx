@@ -30,7 +30,6 @@ export default function Signup() {
 
     setLoading(true);
 
-    // Simulate a delay for signup
     setTimeout(() => {
       users.push({ name });
       localStorage.setItem("users", JSON.stringify(users));

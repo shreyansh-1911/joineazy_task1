@@ -20,7 +20,17 @@ const Login = () => {
     );
 
     if (exists) {
+      // create fake token with expiry 1 hour
+      const token = btoa(
+        JSON.stringify({
+          name,
+          exp: Date.now() + 60 * 60 * 1000,
+        })
+      );
+
+      localStorage.setItem("token", token);
       localStorage.setItem("currentUser", JSON.stringify({ name }));
+
       navigate("/student");
     } else {
       setError("User not found. Please sign up first.");
@@ -29,6 +39,14 @@ const Login = () => {
   };
 
   const handleAdminLogin = () => {
+    // create fake admin token
+    const token = btoa(
+      JSON.stringify({
+        name: "admin",
+        exp: Date.now() + 60 * 60 * 1000,
+      })
+    );
+    localStorage.setItem("token", token);
     localStorage.setItem("currentUser", JSON.stringify({ name: "admin" }));
     navigate("/admin");
   };

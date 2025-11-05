@@ -2,8 +2,8 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import StudentDashboard from "./components/StudentDashboard";
-import AdminDashboard from "./components/AdminDashboard";
+import StudentDashboard from "./components/students/StudentDashboard";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 function App() {
   return (

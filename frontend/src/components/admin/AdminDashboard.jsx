@@ -11,7 +11,7 @@ export default function AdminDashboard() {
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
-    // If no courses exist, initialize defaults
+    //initialize defaults
     if (courses.length === 0) {
       const defaultCourses = [
         { id: 1, name: "LLM" },
@@ -26,6 +26,7 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
@@ -50,7 +51,7 @@ export default function AdminDashboard() {
         </button>
       </div>
 
-      <h3 className="text-lg font-semibold mb-4">📚 Courses</h3>
+      <h3 className="text-lg font-semibold mb-4">Courses</h3>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {courses.map((c) => (
           <CourseCard key={c.id} course={c} onSelect={() => setSelectedCourse(c)} />

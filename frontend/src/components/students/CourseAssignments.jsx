@@ -35,7 +35,7 @@ export default function CourseAssignments({
     const newGroup = {
       course,
       name: groupName.trim(),
-      leader: currentUser.name, 
+      leader: currentUser.name,
       members: [currentUser.name],
     };
 
@@ -67,7 +67,7 @@ export default function CourseAssignments({
   };
 
 
-  // Handle submission (acknowledgement)
+
   const handleSubmit = (assignment) => {
     if (assignment.type === "Group") {
       if (!userGroup)
@@ -98,7 +98,6 @@ export default function CourseAssignments({
       alert("Group submission acknowledged!");
       window.location.reload();
     } else {
-      // ✅ Individual assignment logic
       const confirm1 = window.confirm("Acknowledge submission?");
       if (!confirm1) return;
 
@@ -125,7 +124,7 @@ export default function CourseAssignments({
   return (
     <div className="bg-white p-6 rounded-lg shadow">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-semibold">📚 {course} Assignments</h3>
+        <h3 className="text-xl font-semibold">{course} Assignments</h3>
         <button
           onClick={onBack}
           className="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded-lg"
@@ -134,9 +133,8 @@ export default function CourseAssignments({
         </button>
       </div>
 
-      {/* ===== Group Management ===== */}
       <div className="mb-6 border p-4 rounded-lg bg-gray-50">
-        <h4 className="text-lg font-semibold mb-2">👥 Group Management</h4>
+        <h4 className="text-lg font-semibold mb-2">Groups</h4>
 
         {userGroup ? (
           <div className="p-2 border rounded bg-green-50">
@@ -195,7 +193,7 @@ export default function CourseAssignments({
         )}
       </div>
 
-      {/* ===== Assignments Section ===== */}
+      {/*Assignments*/}
       {filteredAssignments.length === 0 ? (
         <p>No assignments for this course yet.</p>
       ) : (
@@ -235,21 +233,21 @@ export default function CourseAssignments({
                 </a>
                 {submission && (
                   <p className="text-xs text-green-600 mt-1">
-                    ✅ Submitted on {submission.time}
+                    Submitted on {submission.time}
                   </p>
                 )}
               </div>
 
-              {/* Button logic based on type */}
               {!submitted &&
                 (!isGroupType ||
                   (userGroup && userGroup.leader === currentUser.name)) && (
                   <button
                     onClick={() => handleSubmit(a)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium h-auto w-auto self-center"
                   >
                     Acknowledge
                   </button>
+
                 )}
             </div>
           );

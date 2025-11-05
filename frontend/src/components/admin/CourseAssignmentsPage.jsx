@@ -40,7 +40,7 @@ export default function CourseAssignmentsPage({ course, goBack }) {
         title,
         description,
         link,
-        deadline,
+        deadline: deadline.replace("T", " "),
         type,
         course: course.name,
         submissions: [],
@@ -49,7 +49,6 @@ export default function CourseAssignmentsPage({ course, goBack }) {
       alert("Assignment added!");
     }
 
-    // Reset form
     setTitle("");
     setLink("");
     setDescription("");
@@ -57,6 +56,7 @@ export default function CourseAssignmentsPage({ course, goBack }) {
     setType("Individual");
   };
 
+  // edit assignment
   const handleEdit = (assignment) => {
     setTitle(assignment.title);
     setDescription(assignment.description);
@@ -66,6 +66,8 @@ export default function CourseAssignmentsPage({ course, goBack }) {
     setEditId(assignment.id);
   };
 
+
+  // delete assignment
   const handleDelete = (id) => {
     if (window.confirm("Delete this assignment?")) {
       const updated = assignments.filter((a) => a.id !== id);
@@ -80,12 +82,12 @@ export default function CourseAssignmentsPage({ course, goBack }) {
           onClick={goBack}
           className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
         >
-          ← Back to Courses
+          ← Back
         </button>
         <h2 className="text-2xl font-bold">{course.name} - Assignments</h2>
       </div>
 
-      {/* Create / Edit Assignment */}
+      {/*Create and Edit Assignment*/}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
         <h3 className="text-lg font-semibold mb-4">
           {editId ? "Edit Assignment" : "Create Assignment"}
@@ -150,7 +152,7 @@ export default function CourseAssignmentsPage({ course, goBack }) {
         </div>
       </div>
 
-      {/* Assignment List */}
+
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h3 className="text-lg font-semibold mb-4">Assignments for {course.name}</h3>
         {courseAssignments.length === 0 && <p>No assignments yet.</p>}

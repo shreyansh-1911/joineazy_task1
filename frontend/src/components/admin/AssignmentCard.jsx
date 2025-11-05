@@ -131,7 +131,7 @@ export default function AssignmentCard({ assignment, onEdit, onDelete }) {
           : `${completed}/${total} Students Submitted`}
       </p>
 
-      {/* Submission Details */}
+      {/*Submission Details*/}
       {showDetails && (
         <div className="mt-3 border-t pt-3">
           <h5 className="text-sm font-semibold mb-2">
@@ -140,7 +140,7 @@ export default function AssignmentCard({ assignment, onEdit, onDelete }) {
               : "Student Submission Status:"}
           </h5>
 
-          {/* For Individual Assignments */}
+          {/*For Individual Assignments*/}
           {assignment.type !== "Group" ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
               {detailsList.map((u) => (
@@ -158,7 +158,7 @@ export default function AssignmentCard({ assignment, onEdit, onDelete }) {
               ))}
             </div>
           ) : (
-            /* For Group Assignments */
+            /*For Group Assignments*/
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {detailsList.map((g) => (
                 <div
