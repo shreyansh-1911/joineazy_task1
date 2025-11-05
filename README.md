@@ -8,7 +8,7 @@ It uses **LocalStorage** for persistence and supports **Docker** for seamless de
 ## ⚙️ Setup & Installation
 
 ### 🧱 Step 1: Clone the Repository
-git clone https://github.com/<your-username>/joineazy-dashboard.git
+https://github.com/<your-username>/joineazy_Round2.git
 cd joineazy-dashboard
 
 ### ⚙️ Step 2: Install Dependencies
